@@ -1,0 +1,108 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday!</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #b19cd9, #87cefa);
+      color: #fff;
+      text-align: center;
+      padding: 50px;
+    }
+    .quiz-box {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 20px;
+      padding: 30px;
+      max-width: 500px;
+      margin: auto;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      backdrop-filter: blur(10px);
+    }
+    .question {
+      font-size: 1.3em;
+      margin-bottom: 20px;
+    }
+    .options button {
+      display: block;
+      margin: 12px auto;
+      padding: 12px 25px;
+      font-size: 1em;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      background: linear-gradient(45deg, #a020f0, #1e90ff);
+      color: white;
+      transition: background 0.3s, transform 0.2s;
+    }
+    .options button:hover {
+      background: linear-gradient(45deg, #d580ff, #00bfff);
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="quiz-box" id="quiz">
+    <div class="question" id="question">Loading...</div>
+    <div class="options" id="options"></div>
+  </div>
+
+  <script>
+    const quizData = [
+      {
+        question: "Favorite color?", 
+        options: ["Blue", "Pink", "Purple", "Green"], 
+        correct: "Purple"
+      },
+      {
+        question: "Fav Subject?", 
+        options: ["Physics","Chemistry", "Maths"], 
+        correct: "Chemistry" 
+      },
+      {
+        question: "Fav Music Band?", 
+        options: ["One Republic", "One Direction", "Nothing More", "All"], 
+        correct: "Nothing More" 
+      }
+    ];
+
+    let currentQuestion = 0;
+
+    function loadQuestion() {
+      const questionEl = document.getElementById("question");
+      const optionsEl = document.getElementById("options");
+
+      if (currentQuestion < quizData.length) {
+        const q = quizData[currentQuestion];
+        questionEl.innerText = q.question;
+        optionsEl.innerHTML = "";
+        q.options.forEach(option => {
+          const btn = document.createElement("button");
+          btn.innerText = option;
+          btn.onclick = () => {
+            currentQuestion++;
+            loadQuestion();
+          };
+          optionsEl.appendChild(btn);
+        });
+      } else {
+        // Final romantic + birthday message
+        questionEl.innerText = "💖 Will you be my girlfriend? 💖";
+        optionsEl.innerHTML = "";
+        ["Definitely Yes", "No"].forEach(answer => { 
+          const btn = document.createElement("button");
+          btn.innerText = answer;
+          btn.onclick = () => {
+            questionEl.innerText = "JK...🎉 HAPPY BIRTHDAY! 🎉\nI hope your day is filled with laughter, love, and cake 🍰💖. May every moment sparkle just like you, and may this year bring you amazing adventures, unforgettable memories, and all the happiness in the world!";
+            optionsEl.innerHTML = "";
+          };
+          optionsEl.appendChild(btn);
+        });
+      }
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
